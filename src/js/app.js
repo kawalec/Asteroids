@@ -26,6 +26,8 @@ export const Game = {
     window.addEventListener("resize", Game.layout, false);
     document.body.appendChild(Game.canvas);
     Game.enterprise = new Ship(0.04, 35);
+    window.addEventListener("keydown", Game.onKey, false);
+    window.addEventListener("keyup", Game.onKey, false);
     Game.animation();
   },
   layout: () => {
@@ -46,6 +48,26 @@ export const Game = {
       Var.lastTime = time;
       Game.ctx.clearRect(0, 0, Game.H, Game.W);
       Game.enterprise.draw();
+    }
+  },
+  onKey: event => {
+    if (
+      event.keyCode == 32 ||
+      event.keyCode == 37 ||
+      event.keyCode == 38 ||
+      event.keyCode == 39
+    ) {
+      event.preventDefault();
+      if (event.type == "keydown" && !Game["key" + event.keyCode]) {
+        Game["key" + event.keyCode] = true;
+        if (event.keyCode == 37) {
+          Game.key39 = false;
+        } else if ((event, keyCode == 39)) {
+          Game.key37 == false;
+        }
+      } else if (event.type == "keyup") {
+        Game["key" + event.keyCode] == false;
+      }
     }
   }
 };
