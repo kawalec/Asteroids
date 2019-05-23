@@ -1,9 +1,12 @@
+import "../styles/styles.css";
+import { Ship } from "./ship.js";
+
 window.onload = () => {
   Game.init();
 };
 
 // Variables object
-Var = {
+export const Var = {
   fps: 60,
   W: 0,
   H: 0,
@@ -15,7 +18,7 @@ Var = {
 };
 
 // Game object
-Game = {
+export const Game = {
   init: () => {
     Game.canvas = document.createElement("canvas");
     Game.ctx = Game.canvas.getContext("2d");

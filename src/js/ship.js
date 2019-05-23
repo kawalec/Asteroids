@@ -1,4 +1,7 @@
-class Ship {
+import { Var } from "./app.js";
+import { Game } from "./app.js";
+
+export class Ship {
   constructor(radius, rearPoints) {
     this.r = radius;
     this.rear = rearPoints;
