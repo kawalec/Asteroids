@@ -6,16 +6,40 @@ export class Ship {
     this.r = radius;
     this.rear = rearPoints;
     this.deg = 0;
-    this.x = Var.H / 2;
     this.y = Var.W / 2;
+    this.x = Var.H / 2;
+    this.turnSpeed = 10;
+    this.moveX = 0;
+    this.moveY = 0;
+    this.acc = 0.0001;
+    this.maxSpeed = 0.01;
     this.points = [{}, {}, {}];
   }
   draw() {
     if (Game.key37 || Game.key39) {
-      this.deg = this.deg + 1 * (Game.key37 ? -1 : 1);
-      console.log(this.deg);
+      this.deg = this.deg + this.turnSpeed * (Game.key37 ? -1 : 1);
     }
-
+    if (Game.key38) {
+      this.moveX = Math.max(
+        -this.maxSpeed * Var.D,
+        Math.min(
+          this.maxSpeed * Var.D,
+          this.moveX + Math.sin((Math.PI / 180) * this.deg) * this.acc * Var.D
+        )
+      );
+      this.moveY = Math.max(
+        -this.maxSpeed * Var.D,
+        Math.min(
+          this.maxSpeed * Var.D,
+          this.moveY - Math.cos((Math.PI / 180) * this.deg) * this.acc * Var.D
+        )
+      );
+    } else {
+      this.moveX = Math.abs(this.moveX) > this.acc ? this.moveX * 0.98 : 0;
+      this.moveY = Math.abs(this.moveY) > this.acc ? this.moveY * 0.98 : 0;
+    }
+    this.x += this.moveX;
+    this.y += this.moveY;
     Game.ctx.beginPath();
     for (let i = 0; i < 3; i++) {
       this.tmp =
@@ -25,7 +49,7 @@ export class Ship {
       this.points[i].x =
         Math.sin((Math.PI / 180) * this.tmp) * this.r * Var.D + this.x;
       this.points[i].y =
-        -Math.cos((Math.PI / 180) * this.tmp) * this.r * Var.D + this.x;
+        -Math.cos((Math.PI / 180) * this.tmp) * this.r * Var.D + this.y;
 
       Game.ctx[i === 0 ? "moveTo" : "lineTo"](
         this.points[i].x,
