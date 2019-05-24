@@ -46,7 +46,7 @@ export const Game = {
     requestAnimationFrame(Game.animation);
     if (time - Var.lastTime >= 1000 / Var.fps) {
       Var.lastTime = time;
-      Game.ctx.clearRect(0, 0, Game.H, Game.W);
+      Game.ctx.clearRect(0, 0, Var.H, Var.W);
       Game.enterprise.draw();
     }
   },
@@ -57,16 +57,16 @@ export const Game = {
       event.keyCode == 38 ||
       event.keyCode == 39
     ) {
-      event.preventDefault();
+      // event.preventDefault();
       if (event.type == "keydown" && !Game["key" + event.keyCode]) {
         Game["key" + event.keyCode] = true;
         if (event.keyCode == 37) {
           Game.key39 = false;
-        } else if ((event, keyCode == 39)) {
-          Game.key37 == false;
+        } else if (event.keyCode == 39) {
+          Game.key37 = false;
         }
       } else if (event.type == "keyup") {
-        Game["key" + event.keyCode] == false;
+        Game["key" + event.keyCode] = false;
       }
     }
   }

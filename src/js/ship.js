@@ -11,6 +11,11 @@ export class Ship {
     this.points = [{}, {}, {}];
   }
   draw() {
+    if (Game.key37 || Game.key39) {
+      this.deg = this.deg + 1 * (Game.key37 ? -1 : 1);
+      console.log(this.deg);
+    }
+
     Game.ctx.beginPath();
     for (let i = 0; i < 3; i++) {
       this.tmp =
