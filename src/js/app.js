@@ -1,5 +1,6 @@
 import "../styles/styles.css";
 import { Ship } from "./ship.js";
+import { Bullet } from "./bullet.js";
 
 window.onload = () => {
   Game.init();
@@ -47,7 +48,8 @@ export const Game = {
     if (time - Var.lastTime >= 1000 / Var.fps) {
       Var.lastTime = time;
       Game.ctx.clearRect(0, 0, Var.W, Var.H);
-      Game.enterprise.draw();
+      Game.enterprise.drawShip();
+      Game.shot.drawBullet();
     }
   },
   onKey: event => {
@@ -63,6 +65,13 @@ export const Game = {
           Game.key39 = false;
         } else if (event.keyCode == 39) {
           Game.key37 = false;
+        } else if (event.keyCode == 32) {
+          Game.shot = new Bullet(
+            Game.enterprise.points[0].x,
+            Game.enterprise.points[0].y,
+            Game.enterprise.deg
+          );
+          console.log(Game);
         }
       } else if (event.type == "keyup") {
         Game["key" + event.keyCode] = false;

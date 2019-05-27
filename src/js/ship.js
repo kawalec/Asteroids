@@ -11,11 +11,11 @@ export class Ship {
     this.turnSpeed = 10;
     this.moveX = 0;
     this.moveY = 0;
-    this.acc = 0.0001;
+    this.speed = 0.0001;
     this.maxSpeed = 0.01;
     this.points = [{}, {}, {}];
   }
-  draw() {
+  drawShip() {
     if (Game.key37 || Game.key39) {
       this.deg = this.deg + this.turnSpeed * (Game.key37 ? -1 : 1);
     }
@@ -24,19 +24,19 @@ export class Ship {
         -this.maxSpeed * Var.D,
         Math.min(
           this.maxSpeed * Var.D,
-          this.moveX + Math.sin((Math.PI / 180) * this.deg) * this.acc * Var.D
+          this.moveX + Math.sin((Math.PI / 180) * this.deg) * this.speed * Var.D
         )
       );
       this.moveY = Math.max(
         -this.maxSpeed * Var.D,
         Math.min(
           this.maxSpeed * Var.D,
-          this.moveY - Math.cos((Math.PI / 180) * this.deg) * this.acc * Var.D
+          this.moveY - Math.cos((Math.PI / 180) * this.deg) * this.speed * Var.D
         )
       );
     } else {
-      this.moveX = Math.abs(this.moveX) > this.acc ? this.moveX * 0.98 : 0;
-      this.moveY = Math.abs(this.moveY) > this.acc ? this.moveY * 0.98 : 0;
+      this.moveX = Math.abs(this.moveX) > this.speed ? this.moveX * 0.98 : 0;
+      this.moveY = Math.abs(this.moveY) > this.speed ? this.moveY * 0.98 : 0;
     }
     this.x += this.moveX;
     this.y += this.moveY;
@@ -72,7 +72,6 @@ export class Ship {
         this.points[i].y
       );
     }
-
     Game.ctx.closePath();
     Game.ctx.stroke();
   }
