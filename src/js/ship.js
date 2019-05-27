@@ -40,6 +40,23 @@ export class Ship {
     }
     this.x += this.moveX;
     this.y += this.moveY;
+
+    if (this.points.every(el => el.x < 0)) {
+      this.x = Var.W;
+    }
+
+    if (this.points.every(el => el.x > Var.W)) {
+      this.x = 0;
+    }
+
+    if (this.points.every(el => el.y < 0)) {
+      this.y = Var.H;
+    }
+
+    if (this.points.every(el => el.y > Var.H)) {
+      this.y = 0;
+    }
+
     Game.ctx.beginPath();
     for (let i = 0; i < 3; i++) {
       this.tmp =
@@ -50,12 +67,12 @@ export class Ship {
         Math.sin((Math.PI / 180) * this.tmp) * this.r * Var.D + this.x;
       this.points[i].y =
         -Math.cos((Math.PI / 180) * this.tmp) * this.r * Var.D + this.y;
-
       Game.ctx[i === 0 ? "moveTo" : "lineTo"](
         this.points[i].x,
         this.points[i].y
       );
     }
+
     Game.ctx.closePath();
     Game.ctx.stroke();
   }
